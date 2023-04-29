@@ -1,0 +1,119 @@
+﻿@using MVC_Helpers_PWA.Controllers;
+@using PWA_WEBApi.Models;
+
+@{
+    var marcas = ViewData["listaMarcas"];
+    var tiposEquipos = ViewData["listaTipoEquipos"];
+    var estadosEquipos = ViewData["listadoEstadosEquipos"];
+    var equipos = ViewData["listadoEquipos"];
+}
+
+<h1>Mantenimiento de equipos</h1>
+<br/>
+<form class="form" asp-action="CrearEquipo" id="equipos_form">
+    @*Inicio del formulario*@
+    <div class="form-group row mb-4">
+        <div class="col-sm-2">
+            <label>Nombre</label>
+        </div>
+        <div class="col-sm-4">
+            @Html.TextBox("nombre" , "" , new {@class="form-control"})
+        </div>
+        <div class="col-sm-2">
+            @Html.Label("lblDescripcion" , "Descripcion")
+        </div>
+        <div class="col-sm-4">
+            @Html.TextArea("descripcion" , "" , new {@class="form-control" , @placeholder="Ingrese la descripcion"})
+        </div>
+
+    </div>
+    <div class="form-group row mb-4">
+        <div class="col-sm-2">
+            <label>Tipo de equipo</label>
+        </div>
+        <div class="col-sm-4">
+            @Html.DropDownList("tipo_equipo_id" , tiposEquipos as SelectList, "Seleccione una tipo" , new {@class="form-control"})
+        </div>
+    </div>
+    <div class="form-group row mb-4">
+        <div class="col-sm-2">
+            <label>Marca</label>
+        </div>
+        <div class="col-sm-4">
+            @Html.DropDownList("marca_id" , marcas as SelectList, "Seleccione una marca" , new {@class="form-control"})
+        </div>
+        <div class="col-sm-2">
+            <label>Modelo</label>
+        </div>
+        <div class="col-sm-4">
+            @Html.TextBox("modelo" , "" , new {@class="form-control"})
+        </div>
+    </div>
+
+    <div class="form-group row mb-4">
+        <div class="col-sm-2">
+            <label>Anio de compra</label>
+        </div>
+        <div class="col-sm-4">
+            @Html.TextBox("anio_compra" , "" , new {@class="form-control"})
+        </div>
+        <div class="col-sm-2">
+            <label>Costo</label>
+        </div>
+        <div class="col-sm-4">
+            @Html.TextBox("costo" , "" , new {@class="form-control"})
+        </div>
+    </div>
+
+    <div class="form-group row mb-4">
+        <div class="col-sm-2">
+            <label>Vida util</label>
+        </div>
+        <div class="col-sm-4">
+            @Html.TextBox("vida_util" , "" , new {@class="form-control"})
+        </div>
+        <div class="col-sm-2">
+            <label>Estado</label>
+        </div>
+        <div class="col-sm-4">
+            @Html.DropDownList("estado_equipo_id" , estadosEquipos as SelectList, "Seleccione una estado" , new {@class="form-control"})
+        </div>
+    </div>
+
+    <div class="form-group row mb-4">
+        <div class="offset-2 col-sm-4">
+            @Html.CheckBox("inactivo" , false) Inactivo
+        </div>
+    </div>
+    <div class="form-group row mb-4">
+        <div class="offset-2 col-sm-4">
+            <input type="submit" class="btn btn-primary" value="guardar" />
+        </div>
+    </div>
+
+    @*Fin del formulario*@
+</form>
+
+<div class="container row p-3">
+    <div class="col-md-12">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Equipo</th>
+                    <th>Descripcion</th>
+                    <th>Marca</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (EquipoConMarca equipo in (IEnumerable<EquipoConMarca>) equipos)
+                {
+                    <tr>
+                        <td>@equipo.nombre</td>
+                        <td>@equipo.descripcion</td>
+                        <td>@equipo.marca_nombre</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
